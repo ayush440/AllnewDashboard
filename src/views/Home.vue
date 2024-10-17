@@ -1,6 +1,7 @@
 <template>
   <Header @toggle-menu="toggleMobileMenu" />
   <div class="home">
+   
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="bg-white rounded-lg shadow p-6 mt-5">
         <h2 class="text-xl font-semibold mb-4">Today's profit</h2>
@@ -38,27 +39,38 @@
       <PositionsTable :positions="positions" />
     </div>
   </div>
-</template>
-
-<script setup>
-import { ref } from 'vue'
-import DonutChart from '../components/DonutChart.vue'
-import StatCard from '../../src/components/Statcard.vue'
-import PositionsTable from '../components/PositionsTable.vue'
-import Header from '../components/Header.vue';
-
-const profitData = ref([
+  </template>
+  
+  <script setup>
+  import { ref, onMounted } from 'vue'
+  import { useAuthStore } from '../stores/auth'
+  import DonutChart from '../components/DonutChart.vue'
+  import StatCard from '../../src/components/Statcard.vue'
+  import PositionsTable from '../components/PositionsTable.vue'
+  import Header from '../components/Header.vue'
+  
+  const authStore = useAuthStore()
+  
+  const profitData = ref([
   { name: 'Strategy name', value: 25, color: '#FF6384' },
   { name: 'Strategy name', value: 25, color: '#36A2EB' },
   { name: 'Strategy name', value: 30, color: '#FFCE56' },
   { name: 'Strategy name', value: 20, color: '#4BC0C0' },
-])
-
-const positions = ref([
+  ])
+  
+  const positions = ref([
   { name: 'Super Hero Strategy', value: '17', action: 'Buy', time: '02:32AM' },
   { name: 'Super Hero Strategy', value: '17', action: 'Buy', time: '02:32AM' },
   { name: 'Super Hero Strategy', value: '17', action: 'Buy', time: '02:32AM' },
   { name: 'Broker Angel-A423683', buyPrice: '₹543.56', sellPrice: '₹643.56', action: 'Square off' },
   { name: 'Super Hero Strategy', value: '17', action: 'Buy', time: '02:32AM' },
-])
-</script>
+  ])
+  
+  onMounted(() => {
+  authStore.checkAuth()
+  })
+  
+  const toggleMobileMenu = () => {
+  // Implement mobile menu toggle logic here
+  }
+  </script>

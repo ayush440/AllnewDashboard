@@ -4,18 +4,20 @@
       <button @click="$emit('toggle-menu')" class="menu-toggle md:hidden">
         <i class="icon-menu"></i>
       </button>
-      <h1>Hello {{ userName }} 👋🏻</h1>
-      <div class="mode-toggle">
+      <h1>Hello {{ authStore.user?.name || 'Guest' }} 👋🏻</h1>
+      <!-- <div class="mode-toggle">
         <button :class="{ active: mode === 'Paper' }" @click="setMode('Paper')">Paper</button>
         <button :class="{ active: mode === 'Live' }" @click="setMode('Live')">Live</button>
-      </div>
+      </div> -->
     </div>
   </header>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-const userName = ref('Sam')
+import { useAuthStore } from '../stores/auth'
+
+const authStore = useAuthStore()
 const mode = ref('Paper')
 const setMode = (newMode) => {
   mode.value = newMode

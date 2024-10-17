@@ -1,25 +1,26 @@
+
 <template>
   <div class="profile-page bg-[#ebf5ff] min-h-screen p-8">
     <div class="max-w-6xl mx-auto">
       <h1 class="text-3xl font-bold text-gray-800 mb-8">Profile</h1>
-
+  
       <div class="bg-white rounded-lg shadow-md p-6 mb-8">
         <div class="flex items-center mb-6">
           <img src="../assets/images/profile.jpg" alt="Profile Picture" class="w-24 h-24 rounded-full mr-6 object-cover" />
           <div>
-            <h2 class="text-2xl font-semibold text-gray-800">Welcome Kuldeep,</h2>
+            <h2 class="text-2xl font-semibold text-gray-800">Welcome {{ authStore.user?.name || 'Guest' }},</h2>
             <p class="text-gray-600">Trader</p>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h3 class="text-lg font-semibold text-gray-800 mb-2">Contact Details</h3>
-            <p class="text-gray-600">kuldeep@gmail.com</p>
+            <p class="text-gray-600">{{ authStore.user?.email || 'guest@example.com' }}</p>
             <p class="text-gray-600">+91 9689898958</p>
           </div>
         </div>
       </div>
-
+  
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="col-span-2">
           <div class="bg-white rounded-lg shadow-md p-6 mb-8">
@@ -29,7 +30,7 @@
             </div>
             <div class="mb-4">
               <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-              <input type="text" value="kuldeep" class="w-full p-2 border border-gray-300 rounded-md" readonly />
+              <input type="text" :value="authStore.user?.name || ''" class="w-full p-2 border border-gray-300 rounded-md" readonly />
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Change Profile Picture</label>
@@ -95,35 +96,41 @@
             </div>
           </div>
         </div>
+</div>
 
-        <div class="col-span-1">
-          <div class="bg-white rounded-lg shadow-md p-6 sticky top-8">
-            <h3 class="text-xl font-semibold text-gray-800 mb-4">Quote of the Day</h3>
-            <p class="text-gray-600 italic">
-              "Success is not final, failure is not fatal: It is the courage to continue that counts." - Winston Churchill
-            </p>
-          </div>
+      <div class="col-span-1">
+        <div class="bg-white rounded-lg shadow-md p-6 sticky top-8">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Quote of the Day</h3>
+          <p class="text-gray-600 italic">
+            "Success is not final, failure is not fatal: It is the courage to continue that counts." - Winston Churchill
+          </p>
         </div>
       </div>
+    </div>
 
-      <div class="mt-8 flex">
-        <button @click="handleLogout" class="bg-red-500 text-white px-8 py-2 rounded-md hover:bg-red-600 transition-colors w-full max-w-md">
-          Logout
-        </button>
-      </div>
+    <div class="mt-8 flex">
+      <button @click="handleLogout" class="bg-red-500 text-white px-8 py-2 rounded-md hover:bg-red-600 transition-colors w-full max-w-md">
+        Logout
+      </button>
     </div>
   </div>
+
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
 const router = useRouter();
 
+onMounted(() => {
+authStore.checkAuth()
+})
+
 const handleLogout = () => {
-  authStore.logout();
-  router.push('/login');
+authStore.logout();
+router.push('/login');
 };
 </script>

@@ -31,8 +31,8 @@
     <div class="bottom-wrapper mt-auto">
       <div class="admin-profile mb-8">
         <img src="../assets/images/profile.jpg" alt="Admin Profile" class="w-16 h-16 rounded-full mx-auto mb-2 object-cover" />
-        <h3 class="text-center text-gray-800 font-semibold">Sam Wheeler</h3>
-        <p class="text-center text-gray-600 text-sm">samwheeler@example.com</p>
+        <h3 class="text-center text-gray-800 font-semibold">{{ authStore.user?.name || 'Guest' }}</h3>
+        <p class="text-center text-gray-600 text-sm">{{ authStore.user?.email || 'guest@example.com' }}</p>
       </div>
       
       <router-link to="/profile" class="view-profile">
@@ -41,37 +41,35 @@
       </router-link>
     </div>
   </div>
-</template>
-
-<script setup>
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-const showUserMenu = ref(false)
-const isMobileMenuOpen = ref(false)
-
-const menuItems = [
+  </template>
+  
+  <script setup>
+  import { ref, onMounted } from 'vue'
+  import { useRoute } from 'vue-router'
+  import { useAuthStore } from '../stores/auth'
+  
+  const route = useRoute()
+  const authStore = useAuthStore()
+  const showUserMenu = ref(false)
+  const isMobileMenuOpen = ref(false)
+  
+  const menuItems = [
   { name: 'Home', path: '/', icon: 'icon-home' },
   { name: 'Strategy', path: '/strategy', icon: 'icon-strategy' },
   { name: 'Broker', path: '/broker', icon: 'icon-broker' },
   { name: 'Orders', path: '/orders', icon: 'icon-orders' },
   { name: 'Positions', path: '/positions', icon: 'icon-positions' },
   { name: 'Tutorials', path: '/tutorials', icon: 'icon-tutorials' },
-]
-
-const toggleMobileMenu = () => {
+  ]
+  
+  const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
-}
-
-const refreshData = () => {
-  // Implement refresh logic
-}
-
-const logout = () => {
-  // Implement logout logic
-}
-</script>
+  }
+  
+  onMounted(() => {
+  authStore.checkAuth()
+  })
+  </script>
 
 <style scoped>
 .sidebar {
