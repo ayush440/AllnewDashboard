@@ -8,7 +8,7 @@
     </div>
     <p class="mb-4 text-gray-600">{{ brokers.length }} Brokers Connected</p>
     
-    <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="bg-white rounded-lg shadow overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <table class="min-w-full">
         <thead class="bg-gray-50">
           <tr>

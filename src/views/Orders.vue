@@ -1,9 +1,9 @@
 <template>
-    <div class="order-page p-4 sm:p-6 lg:p-8 -ml-10 ">
+    <div class="order-page p-4 sm:p-6 lg:p-8 -ml-10  ">
       <h1 class="text-2xl sm:text-3xl font-bold text-[#31427A] mb-1">Orders</h1>
       <p class="mb-4 text-gray-600">{{ orders.length }} Orders</p>
       
-      <div class="overflow-x-auto bg-white rounded-lg shadow"> <!-- Centered table container -->
+      <div class="overflow-x-auto bg-white rounded-lg shadow "> <!-- Centered table container -->
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>

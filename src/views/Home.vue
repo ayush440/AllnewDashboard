@@ -1,38 +1,48 @@
 <template>
-  <div class="home bg-gray-100 min-h-screen">
+  <div class="home bg-gray-100 min-h-screen container mx-auto px-4 sm:px-10 lg:px-8">
     <Header @toggle-menu="toggleMobileMenu" />
     
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <!-- Grid container for responsive layout -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Profit Section -->
-        <div class="bg-white rounded-lg shadow-md p-4">
-          <h2 class="text-lg font-semibold mb-2 text-center">Today's Profit</h2>
-          <div class="w-full max-w-[250px] mx-auto">
+        <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
+          <h2 class="text-lg sm:text-xl font-semibold mb-4 text-center">Today's Profit</h2>
+          <div class="w-full max-w-xs mx-auto">
             <DonutChart :data="profitData" />
           </div>
         </div>
 
         <!-- Sales Section -->
-        <div class="bg-white rounded-lg shadow-md p-4">
-          <h2 class="text-lg font-semibold mb-1 text-center">Today's Sales</h2>
-          <p class="text-sm text-gray-500 mb-3 text-center">Sales Summary</p>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
+          <h2 class="text-lg sm:text-xl font-semibold mb-2 text-center">Today's Sales</h2>
+          <p class="text-sm text-gray-500 mb-4 text-center">Sales Summary</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <StatCard
-              v-for="(stat, index) in salesStats"
-              :key="index"
-              :title="stat.title"
-              :value="stat.value"
-              :change="stat.change"
-              :icon="stat.icon"
+              title="Total Profit"
+              value="₹1k"
+              change="+8% from yesterday"
+              icon="TrendingUp"
+            />
+            <StatCard
+              title="Strategy Deployed"
+              value="32"
+              change="+4% from yesterday"
+              icon="Zap"
+            />
+            <StatCard
+              title="Total Orders"
+              value="53"
+              change="+3% from yesterday"
+              icon="ShoppingCart"
             />
           </div>
         </div>
       </div>
 
       <!-- Positions Table Section -->
-      <div class="mt-4 sm:mt-6 bg-white rounded-lg shadow-md overflow-hidden">
-        <h2 class="text-lg font-semibold p-4 border-b">Positions</h2>
+      <div class="mt-6 bg-white rounded-lg shadow-md overflow-hidden">
+        <h2 class="text-lg sm:text-xl font-semibold p-4 sm:p-6 border-b">Positions</h2>
         <div class="overflow-x-auto">
           <PositionsTable :positions="positions" />
         </div>
@@ -58,12 +68,6 @@ const profitData = ref([
   { name: 'Strategy 4', value: 20, color: '#4BC0C0' },
 ])
 
-const salesStats = [
-  { title: "Total Profit", value: "₹1k", change: "+8% from yesterday", icon: "TrendingUp" },
-  { title: "Strategy Deployed", value: "32", change: "+4% from yesterday", icon: "Zap" },
-  { title: "Total Orders", value: "53", change: "+3% from yesterday", icon: "ShoppingCart" },
-]
-
 const positions = ref([
   { name: 'Super Hero Strategy', value: '17', action: 'Buy', time: '02:32AM' },
   { name: 'Super Hero Strategy', value: '17', action: 'Buy', time: '02:32AM' },
@@ -82,14 +86,31 @@ const toggleMobileMenu = () => {
 </script>
 
 <style scoped>
+/* Ensure no overflow on smaller screens */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
 .home {
   max-width: 100%;
   overflow-x: hidden;
 }
 
-@media (max-width: 640px) {
+.max-w-7xl {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
   .home {
-    font-size: 14px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 </style>

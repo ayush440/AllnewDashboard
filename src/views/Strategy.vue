@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-bold mb-4">My Strategies</h1>
     <p class="mb-4">{{ strategies.length }} Strategy Joined</p>
     
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <table class="min-w-full bg-white">
         <thead class="bg-gray-100">
           <tr>
