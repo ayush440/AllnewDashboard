@@ -1,6 +1,6 @@
 <template>
-  <header class="header">
-    <div class="header-content">
+  <header class="header mb-6">
+    <div class="header-content ">
       <button @click="$emit('toggle-menu')" class="menu-toggle md:hidden">
         <i class="icon-menu"></i>
       </button>
@@ -69,6 +69,8 @@ const setMode = (newMode) => {
   .header {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
     margin-top: 20px;
   }
 }

@@ -1,45 +1,45 @@
 <template>
-  <div class="broker-page p-6">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-[#31427A]">Brokers</h1>
-      <button @click="openAddBrokerModal" class="bg-[#5847f7] text-white px-4 py-2 rounded-lg hover:bg-[#4c3ed3] transition-colors duration-300">
+  <div class="broker-page p-4 sm:p-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+      <h1 class="text-2xl font-bold text-[#31427A] mb-4 sm:mb-0">Brokers</h1>
+      <button @click="openAddBrokerModal" class="w-full sm:w-auto bg-[#5847f7] text-white px-4 py-2 rounded-lg hover:bg-[#4c3ed3] transition-colors duration-300">
         Add New Broker
       </button>
     </div>
     <p class="mb-4 text-gray-600">{{ brokers.length }} Brokers Connected</p>
     
-    <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="bg-white rounded-lg shadow overflow-x-auto">
       <table class="min-w-full">
         <thead class="bg-gray-50">
           <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Broker</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Broker UserId</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Token Date</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Active</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Connect</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ACTIONS</th>
+            <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Broker</th>
+            <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Broker UserId</th>
+            <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Token Date</th>
+            <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Active</th>
+            <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Connect</th>
+            <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ACTIONS</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="broker in brokers" :key="broker.id" :class="{ 'bg-gray-50': broker.id % 2 === 0 }">
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
                 <img :src="getBrokerImage(broker.name)" class="w-8 h-8 mr-3 object-contain" :alt="broker.name">
                 <span class="font-medium text-gray-900">{{ broker.name }}</span>
               </div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ broker.userId }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ broker.tokenDate }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ broker.userId }}</td>
+            <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ broker.tokenDate }}</td>
+            <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
               <label class="switch">
                 <input type="checkbox" v-model="broker.active" @change="toggleActive(broker)">
                 <span class="slider round"></span>
               </label>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
               <button @click="connectBroker(broker)" class="text-[#5847f7] hover:underline">Connect</button>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium">
               <button @click="editBroker(broker)" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</button>
               <button @click="openOrdersPositionsModal(broker)" class="text-green-600 hover:text-green-900 mr-2">Orders/Positions</button>
               <button @click="deleteBroker(broker.id)" class="text-red-600 hover:text-red-900">Delete</button>
@@ -53,7 +53,7 @@
     <Modal v-if="showBrokerModal" @close="closeBrokerModal">
       <h2 class="text-xl font-bold mb-4">{{ isEditing ? 'Edit' : 'Add' }} Broker Info</h2>
       <form @submit.prevent="submitBrokerForm">
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700">Select Broker*</label>
             <select v-model="brokerForm.name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -117,29 +117,29 @@
         <table class="min-w-full">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TIME</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TICKER</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SIDE</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ORDER TYPE</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PRICE</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AVG PRICE</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QTY</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">STATUS</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TIME</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TICKER</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SIDE</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ORDER TYPE</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PRICE</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AVG PRICE</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QTY</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">STATUS</th>
             </tr>
           </thead>
           <tbody>
             <tr v-if="orders.length === 0">
-              <td colspan="8" class="px-6 py-4 text-center text-gray-500">No orders</td>
+              <td colspan="8" class="px-4 sm:px-6 py-4 text-center text-gray-500">No orders</td>
             </tr>
             <tr v-for="order in orders" :key="order.id" class="bg-white">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.time }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ order.ticker }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.side }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.orderType }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.price }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.avgPrice }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.qty }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.status }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.time }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ order.ticker }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.side }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.orderType }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.price }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.avgPrice }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.qty }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.status }}</td>
             </tr>
           </tbody>
         </table>
@@ -148,23 +148,23 @@
         <table class="min-w-full">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SYMBOL</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QTY</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AVG. PRICE</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">LTP</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">P&L</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SYMBOL</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QTY</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AVG. PRICE</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">LTP</th>
+              <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">P&L</th>
             </tr>
           </thead>
           <tbody>
             <tr v-if="positions.length === 0">
-              <td colspan="5" class="px-6 py-4 text-center text-gray-500">No positions</td>
+              <td colspan="5" class="px-4 sm:px-6 py-4 text-center text-gray-500">No positions</td>
             </tr>
-            <tr v-for="position in positions" :key="position.id" class="bg-white">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ position.symbol }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ position.qty }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ position.avgPrice }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ position.ltp }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ position.pnl }}</td>
+            <tr v-for="position in positions" :key="position.id"   class="bg-white">
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ position.symbol }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ position.qty }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ position.avgPrice }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ position.ltp }}</td>
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ position.pnl }}</td>
             </tr>
           </tbody>
         </table>
@@ -181,7 +181,7 @@ import { useBrokerStore } from '../stores/broker'
 const brokerStore = useBrokerStore()
 const brokers = computed(() => brokerStore.getBrokers)
 
-const  showBrokerModal = ref(false)
+const showBrokerModal = ref(false)
 const isEditing = ref(false)
 const brokerForm = reactive({
   name: '',
@@ -330,5 +330,29 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+@media (max-width: 640px) {
+  .broker-page {
+    padding: 1rem;
+  }
+
+  .broker-page h1 {
+    font-size: 1.5rem;
+  }
+
+  .broker-page button {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .table-responsive table {
+    width: 100%;
+    min-width: 500px;
+  }
 }
 </style>

@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import Chart from 'chart.js/auto';
 
 const chartRef = ref(null);
@@ -49,6 +49,7 @@ const createChart = () => {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           position: 'right',
@@ -90,30 +91,44 @@ const createChart = () => {
           enabled: true
         }
       },
-      cutout: '50%', // Reduced the inner size for a smaller donut
+      cutout: '50%',
       spacing: 5
     }
   });
 }
 
+const handleResize = () => {
+  if (chart) {
+    chart.resize();
+  }
+};
+
 onMounted(() => {
   createChart();
+  window.addEventListener('resize', handleResize);
+});
+
+onUnmounted(() => {
+  if (chart) {
+    chart.destroy();
+  }
+  window.removeEventListener('resize', handleResize);
 });
 </script>
 
 <style scoped>
 .donut-chart {
-  height: 350px; /* Reduced height for a smaller chart */
+  height: 350px;
   width: 100%;
-  max-width: 500px; /* Reduced max-width to make the chart smaller */
+  max-width: 500px;
   margin: 0 auto;
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
 
-.chart-title {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 20px;
-  font-weight: 500;
+@media (max-width: 768px) {
+  .donut-chart {
+    height: 300px;
+    max-width: 100%;
+  }
 }
 </style>
