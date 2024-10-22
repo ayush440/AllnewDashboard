@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="">
     <!-- Mobile menu toggle button -->
     <button 
       v-if="isAuthenticated" 
@@ -78,13 +78,13 @@ const handleResize = () => {
 </script>
 
 <style>
-.app-container {
+/* .app-container {
   display: flex;
   min-height: 100vh;
 }
 
 .main-content {
-  flex-grow: 1;
+
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
@@ -93,7 +93,7 @@ const handleResize = () => {
 
 .content-area {
   padding: 20px;
-  flex-grow: 1;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -103,5 +103,5 @@ const handleResize = () => {
   .main-content {
     margin-left: 0 !important;
   }
-}
+} */
 </style>

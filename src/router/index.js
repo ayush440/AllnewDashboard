@@ -9,6 +9,7 @@ import Tutorials from '../views/Tutorials.vue'
 import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
+import LoginSignup from '../views/LoginSignup.vue'
 
 const routes = [
   {
@@ -32,7 +33,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: LoginSignup,
   },
   {
     path: '/orders',  

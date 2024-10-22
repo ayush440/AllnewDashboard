@@ -6,8 +6,10 @@ export const useAuthStore = defineStore('auth', {
     isAuthenticated: false,
   }),
   actions: {
+    async register(name, email, password) {
+      return this.signup(name, email, password)
+    },
     async login(email, password) {
-      // In a real application, you would make an API call here
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           const user = this.findUser(email)
@@ -23,18 +25,59 @@ export const useAuthStore = defineStore('auth', {
       })
     },
     async signup(name, email, password) {
-      // In a real application, you would make an API call here
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           if (this.findUser(email)) {
             reject(new Error('Email already exists'))
           } else {
             const newUser = { name, email, password }
-            // In a real app, you would save this to a database
             localStorage.setItem(`user_${email}`, JSON.stringify(newUser))
             resolve(newUser)
           }
         }, 1000) // Simulate API delay
+      })
+    },
+    async socialLogin(provider) {
+      // Implement social login logic here
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // This is a mock implementation. In a real app, you'd integrate with the social provider's SDK.
+          const mockUser = { name: 'Social User', email: `user@${provider}.com` }
+          this.user = mockUser
+          this.isAuthenticated = true
+          this.persistAuthState()
+          resolve(mockUser)
+        }, 1000)
+      })
+    },
+    async forgotPassword(email) {
+      // Implement forgot password logic here
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const user = this.findUser(email)
+          if (user) {
+            // In a real app, you'd send an email with a reset link
+            console.log(`Password reset email sent to ${email}`)
+            resolve()
+          } else {
+            reject(new Error('User not found'))
+          }
+        }, 1000)
+      })
+    },
+    async confirmEmail(email) {
+      // Implement email confirmation logic here
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const user = this.findUser(email)
+          if (user) {
+            // In a real app, you'd send a confirmation email
+            console.log(`Confirmation email sent to ${email}`)
+            resolve()
+          } else {
+            reject(new Error('User not found'))
+          }
+        }, 1000)
       })
     },
     logout() {
@@ -51,7 +94,6 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     findUser(email) {
-      // In a real app, you would query a database
       const user = localStorage.getItem(`user_${email}`)
       return user ? JSON.parse(user) : null
     },
@@ -63,6 +105,10 @@ export const useAuthStore = defineStore('auth', {
     },
     clearAuthState() {
       localStorage.removeItem('authState')
+    },
+    async initializeAuth() {
+      await this.checkAuth()
+      // You can add more initialization logic here if needed
     }
   },
 })

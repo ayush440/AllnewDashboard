@@ -1,5 +1,5 @@
 <template>
-  <div class="home bg-gray-100 min-h-screen container mx-auto px-4 sm:px-10 lg:px-8">
+  <div class="home bg-gray-100 min-h-screen  mx-auto px-4 sm:px-10 lg:px-8">
     <Header @toggle-menu="toggleMobileMenu" />
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
